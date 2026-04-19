@@ -1,0 +1,809 @@
+@import "tailwindcss";
+
+/* ================================
+   DESIGN TOKENS
+================================ */
+:root {
+  --bg:            #F8F6F1;
+  --bg-secondary:  #F0EDE6;
+  --surface:       #FFFFFF;
+  --text:          #1A1917;
+  --text-secondary:#6B6460;
+  --accent:        #2C5F3F;
+  --accent-hover:  #234D33;
+  --accent-light:  #EAF2EC;
+  --danger:        #B84040;
+  --danger-light:  #FBF0F0;
+  --border:        #E5E0D8;
+  --shadow-sm:     0 1px 3px rgba(26,25,23,0.06);
+  --shadow-md:     0 4px 16px rgba(26,25,23,0.08);
+  --shadow-lg:     0 8px 32px rgba(26,25,23,0.12);
+  --radius:        6px;
+  --radius-lg:     12px;
+  --font-display:  var(--font-cormorant, 'Cormorant Garamond', Georgia, serif);
+  --font-body:     var(--font-jakarta, 'Plus Jakarta Sans', sans-serif);
+  --ease:          200ms ease;
+}
+
+/* ================================
+   BASE RESET
+================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ================================
+   AUTH PAGES (Login / Register)
+================================ */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dot grid background */
+.auth-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, var(--border) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.auth-brand {
+  text-align: center;
+  margin-bottom: 2.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-mark {
+  display: block;
+  font-size: 1.125rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+  line-height: 1;
+}
+
+.brand-tagline {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.auth-header {
+  margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+  font-family: var(--font-display);
+  font-size: 1.875rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.375rem;
+  line-height: 1.1;
+}
+
+.auth-header p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+/* ================================
+   FORM ELEMENTS
+================================ */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-group label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.02em;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--text);
+  transition: border-color var(--ease), background var(--ease), box-shadow var(--ease);
+  outline: none;
+  appearance: none;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.65;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.form-error {
+  padding: 0.75rem 1rem;
+  background: var(--danger-light);
+  border: 1px solid rgba(184,64,64,0.2);
+  border-radius: var(--radius);
+  color: var(--danger);
+  font-size: 0.875rem;
+}
+
+.form-success {
+  padding: 0.75rem 1rem;
+  background: var(--accent-light);
+  border: 1px solid rgba(44,95,63,0.2);
+  border-radius: var(--radius);
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
+/* ================================
+   BUTTONS
+================================ */
+.btn-primary {
+  width: 100%;
+  padding: 0.8125rem 1.5rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: background var(--ease), transform var(--ease), box-shadow var(--ease);
+  margin-top: 0.25rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 2px 10px rgba(44,95,63,0.3);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--text-secondary);
+}
+
+.btn-danger {
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  color: var(--danger);
+  border: 1.5px solid rgba(184,64,64,0.25);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+}
+
+.btn-danger:hover {
+  background: var(--danger-light);
+  border-color: var(--danger);
+}
+
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6875rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--ease);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 2px 10px rgba(44,95,63,0.3);
+}
+
+.auth-switch {
+  margin-top: 1.75rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.auth-switch a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--ease);
+}
+
+.auth-switch a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* ================================
+   APP LAYOUT & NAV
+================================ */
+.app-layout {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(248,246,241,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-brand-mark {
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.nav-greeting {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.nav-greeting strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.nav-logout {
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.375rem 0.625rem;
+  border-radius: 4px;
+  transition: all var(--ease);
+}
+
+.nav-logout:hover {
+  background: var(--bg-secondary);
+  color: var(--text);
+}
+
+.app-main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* ================================
+   PAGE HEADER
+================================ */
+.page-header {
+  margin-bottom: 2.5rem;
+}
+
+.page-header-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.page-eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 500;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.page-subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+}
+
+/* ================================
+   STATS ROW
+================================ */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  transition: box-shadow var(--ease);
+}
+
+.stat-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.stat-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+}
+
+.stat-sub {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+}
+
+/* ================================
+   WORKOUT LIST
+================================ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.section-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.workout-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--ease), box-shadow var(--ease), transform var(--ease);
+}
+
+.workout-card:hover {
+  border-color: rgba(44,95,63,0.4);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.workout-card-left {
+  display: flex;
+  align-items: center;
+  gap: 1.125rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.workout-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-light);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.workout-info { flex: 1; min-width: 0; }
+
+.workout-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.workout-meta {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-top: 0.15rem;
+}
+
+.workout-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.625rem;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.workout-arrow {
+  color: var(--border);
+  font-size: 1.125rem;
+  transition: color var(--ease), transform var(--ease);
+  flex-shrink: 0;
+}
+
+.workout-card:hover .workout-arrow {
+  color: var(--text-secondary);
+  transform: translateX(2px);
+}
+
+/* ================================
+   EMPTY STATE
+================================ */
+.empty-state {
+  text-align: center;
+  padding: 4.5rem 2rem;
+  background: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.25rem;
+  display: block;
+  opacity: 0.5;
+}
+
+.empty-title {
+  font-family: var(--font-display);
+  font-size: 1.625rem;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.empty-text {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.75rem;
+  max-width: 320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ================================
+   WORKOUT DETAIL
+================================ */
+.detail-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 2rem;
+  transition: color var(--ease);
+}
+
+.detail-back:hover { color: var(--text); }
+
+.detail-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-date-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.detail-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.detail-stats {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.detail-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.detail-stat-icon { font-size: 0.875rem; }
+
+.exercises-section {
+  margin-bottom: 2.5rem;
+}
+
+.exercises-section-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.exercises-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+
+.exercise-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.exercise-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.125rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.exercise-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.exercise-set-count {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.sets-table {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 0 1.5rem;
+  display: table;
+}
+
+.sets-table th {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  text-align: left;
+  padding: 0.75rem 1.5rem;
+  background: var(--bg);
+}
+
+.sets-table td {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--text);
+  border-top: 1px solid var(--bg-secondary);
+}
+
+.set-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+/* ================================
+   NOTES / DIVIDER
+================================ */
+.notes-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.notes-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 0.625rem;
+}
+
+.notes-text {
+  font-size: 0.9375rem;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 640px) {
+  .auth-card { padding: 2rem 1.5rem; }
+  .app-nav { padding: 0 1rem; }
+  .nav-greeting { display: none; }
+  .app-main { padding: 2rem 1rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .detail-actions { flex-direction: column; }
+  .detail-actions .btn-secondary,
+  .detail-actions .btn-danger { width: 100%; justify-content: center; }
+}
