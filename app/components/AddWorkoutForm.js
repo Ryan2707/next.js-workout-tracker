@@ -33,8 +33,7 @@ export default function AddWorkoutForm() {
     setTitle('');
     setReps('');
     setLoad('');
-
-    router.refresh(); // ← ververs de server data
+    router.refresh();
   }
 
   return (
@@ -63,7 +62,6 @@ export default function AddWorkoutForm() {
       <button type="submit">Toevoegen</button>
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
-
     </form>
   );
 }

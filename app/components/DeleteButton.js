@@ -1,43 +1,30 @@
-// components/DeleteButton.js
+// app/components/DeleteButton.js
 'use client';
- 
-import { useRouter } from 'next/navigation';
+
 import { useState } from 'react';
- 
-export default function DeleteButton({ workoutId }) {
+import { useRouter } from 'next/navigation';
+
+export default function DeleteButton({ id }) {
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
- 
+
   async function handleDelete() {
-    if (!confirm('Weet je zeker dat je deze workout wilt verwijderen?')) return;
- 
-    setLoading(true);
- 
-    try {
-      const res = await fetch(`/api/workouts/${workoutId}`, {
-        method: 'DELETE',
-      });
- 
-      if (res.ok) {
-        router.push('/workouts');
-        router.refresh();
-      } else {
-        alert('Verwijderen mislukt. Probeer het opnieuw.');
-        setLoading(false);
-      }
-    } catch {
-      alert('Kan geen verbinding maken met de server.');
-      setLoading(false);
+    setDeleting(true);
+
+    const res = await fetch(`/api/workouts/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (res.ok) {
+      router.push('/workouts'); // Stuur terug naar overzicht
+    } else {
+      setDeleting(false); // Fout — zet knop terug
     }
   }
- 
+
   return (
-    <button
-      className="btn-danger"
-      onClick={handleDelete}
-      disabled={loading}
-    >
-      {loading ? 'Verwijderen…' : '🗑 Verwijderen'}
+    <button onClick={handleDelete} disabled={deleting} style={{ color: 'red' }}>
+      {deleting ? 'Verwijderen...' : 'Verwijder Workout'}
     </button>
   );
 }
