@@ -29,7 +29,6 @@ export default function AddWorkoutForm() {
       return;
     }
 
-    // Reset form
     setTitle('');
     setReps('');
     setLoad('');
@@ -37,31 +36,64 @@ export default function AddWorkoutForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Workout Toevoegen</h3>
+    <div style={{
+      background: 'var(--surface)',
+      border: '1px solid var(--border)',
+      borderRadius: 'var(--radius-lg)',
+      padding: '1.75rem',
+      marginBottom: '2rem',
+      boxShadow: 'var(--shadow-sm)',
+    }}>
+      <h3 style={{
+        fontFamily: 'var(--font-display)',
+        fontSize: '1.5rem',
+        fontWeight: 500,
+        color: 'var(--text)',
+        marginBottom: '1.25rem',
+        lineHeight: 1.1,
+      }}>
+        Workout toevoegen
+      </h3>
 
-      <input
-        type="text"
-        placeholder="Oefening (bijv. Push Day)"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Reps"
-        value={reps}
-        onChange={(e) => setReps(e.target.value)}
-      />
-      <input
-        type="number"
-        placeholder="Gewicht (kg)"
-        value={load}
-        onChange={(e) => setLoad(e.target.value)}
-      />
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {error && <div className="form-error">{error}</div>}
 
-      <button type="submit">Toevoegen</button>
+        <div className="form-row">
+          <div className="form-group">
+            <label>Oefening</label>
+            <input
+              type="text"
+              placeholder="bijv. Push Day"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Reps</label>
+            <input
+              type="number"
+              placeholder="10"
+              value={reps}
+              onChange={(e) => setReps(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Gewicht (kg)</label>
+            <input
+              type="number"
+              placeholder="50"
+              value={load}
+              onChange={(e) => setLoad(e.target.value)}
+            />
+          </div>
+        </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-    </form>
+        <div>
+          <button type="submit" className="btn-add">
+            + Toevoegen
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

@@ -7,34 +7,48 @@ import { useSession, signOut } from 'next-auth/react';
 export default function Navbar() {
   const { data: session, status } = useSession();
 
-  // Wacht tot de sessie geladen is — anders zie je een lege navbar
   if (status === 'loading') {
     return (
-      <nav style={{ display: 'flex', gap: '16px', padding: '12px 24px', background: 'white', borderBottom: '1px solid #e5e7eb' }}>
-        <Link href="/"><strong>Workout Tracker</strong></Link>
+      <nav className="app-nav">
+        <Link href="/" className="nav-brand">
+          <span className="nav-brand-mark">▲</span>
+          TRAINEN
+        </Link>
       </nav>
     );
   }
 
   return (
-    <nav style={{ display: 'flex', gap: '16px', padding: '12px 24px', background: 'white', borderBottom: '1px solid #e5e7eb' }}>
-      <Link href="/"><strong>Workout Tracker</strong></Link>
+    <nav className="app-nav">
+      <Link href="/" className="nav-brand">
+        <span className="nav-brand-mark">▲</span>
+        TRAINEN
+      </Link>
 
-      {session ? (
-        // Ingelogd
-        <>
-          <Link href="/workouts">Workouts</Link>
-          <button onClick={() => signOut({ callbackUrl: '/login' })}>
-            Uitloggen
-          </button>
-        </>
-      ) : (
-        // Niet ingelogd
-        <>
-          <Link href="/login">Inloggen</Link>
-          <Link href="/register">Registreren</Link>
-        </>
-      )}
+      <div className="nav-right">
+        {session ? (
+          <>
+            <span className="nav-greeting">
+              Hallo, <strong>{session.user.name}</strong>
+            </span>
+            <Link href="/workouts" className="btn-secondary" style={{ padding: '0.375rem 0.875rem', fontSize: '0.875rem' }}>
+              Workouts
+            </Link>
+            <button className="nav-logout" onClick={() => signOut({ callbackUrl: '/login' })}>
+              Uitloggen
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className="btn-secondary" style={{ padding: '0.375rem 0.875rem', fontSize: '0.875rem' }}>
+              Inloggen
+            </Link>
+            <Link href="/register" className="btn-add" style={{ padding: '0.375rem 0.875rem', fontSize: '0.875rem' }}>
+              Registreren
+            </Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 }

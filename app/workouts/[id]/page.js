@@ -9,7 +9,7 @@ async function getWorkout(id) {
   });
 
   if (res.status === 404) {
-    notFound(); // Stopt de render en toont app/not-found.js
+    notFound();
   }
 
   if (!res.ok) {
@@ -24,15 +24,34 @@ export default async function WorkoutDetailPage({ params }) {
   const workout = await getWorkout(id);
 
   return (
-    <main>
-      <Link href="/workouts">← Terug naar overzicht</Link>
+    <div className="app-main">
+      <Link href="/workouts" className="detail-back">
+        ← Terug naar overzicht
+      </Link>
 
-      <h1>{workout.title}</h1>
-      <p>Reps: {workout.reps}</p>
-      <p>Gewicht: {workout.load}kg</p>
-      <p>Aangemaakt: {new Date(workout.createdAt).toLocaleDateString('nl-NL')}</p>
+      <div className="detail-header">
+        <span className="detail-date-badge">
+          {new Date(workout.createdAt).toLocaleDateString('nl-NL')}
+        </span>
+        <h1 className="detail-title">{workout.title}</h1>
+        <div className="detail-stats">
+          <span className="detail-stat">
+            <span className="detail-stat-icon">🔁</span>
+            {workout.reps} reps
+          </span>
+          <span className="detail-stat">
+            <span className="detail-stat-icon">⚖️</span>
+            {workout.load} kg
+          </span>
+        </div>
+      </div>
 
-      <DeleteButton id={workout._id} />
-    </main>
+      <div className="detail-actions">
+        <Link href="/workouts" className="btn-secondary">
+          ← Terug
+        </Link>
+        <DeleteButton id={workout._id} />
+      </div>
+    </div>
   );
 }
