@@ -60,7 +60,7 @@ export default function LoginForm() {
 
       {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      <button type="submit">Inloggen</button>
+      <button type="submit">InloggeN</button>
 
       <p>Nog geen account? <Link href="/register">Registreren</Link></p>
     </form>
